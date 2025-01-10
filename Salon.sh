@@ -11,15 +11,18 @@ MAIN_MENU() {
   fi
 
   echo -e "1) Haircut \n2) Color \n3) Trim"
+  
   read SERVICE_ID_SELECTED
   case $SERVICE_ID_SELECTED in
-    1)  ;;
-    2)  ;;
-    3)  ;;
+    1) USER_MENU "$SERVICE_ID_SELECTED" ;;
+    2) USER_MENU "$SERVICE_ID_SELECTED" ;;
+    3) USER_MENU "$SERVICE_ID_SELECTED" ;;
     *) MAIN_MENU "Service not found. Please pick one of these:- ";;
   esac
+}
 
-  SERVICE_NAME=$($PSQL "SELECT name FROM services WHERE service_id=$SERVICE_ID_SELECTED;")
+USER_MENU() {
+  SERVICE_NAME=$($PSQL "SELECT name FROM services WHERE service_id = $1;")
   echo -e "\nPlease provide your phone number: "
   read CUSTOMER_PHONE
   CUSTOMER_NAME=$($PSQL "SELECT name FROM customers WHERE phone='$CUSTOMER_PHONE'")
